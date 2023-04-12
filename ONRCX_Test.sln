@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31729.503
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ONRCX_Test", "ONRCX_Test\ONRCX_Test.csproj", "{630AC48C-46B3-4E51-A9F0-9F00F2E06AC2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{630AC48C-46B3-4E51-A9F0-9F00F2E06AC2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{630AC48C-46B3-4E51-A9F0-9F00F2E06AC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{630AC48C-46B3-4E51-A9F0-9F00F2E06AC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{630AC48C-46B3-4E51-A9F0-9F00F2E06AC2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {85FB60CE-9D88-40E6-BFE1-FA9C6E9E4D31}
+	EndGlobalSection
+EndGlobal
