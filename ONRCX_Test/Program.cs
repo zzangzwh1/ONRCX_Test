@@ -26,6 +26,11 @@ namespace ONRCX_Test
             Console.WriteLine($"3. Who order on  2023-01-02 : ");
 
             ThirdQuestion();
+
+
+            //Insert Data into the Table
+            //InsertaIntoTable();
+
             Console.ReadLine();
         }
         #region First Quesion
@@ -43,35 +48,49 @@ namespace ONRCX_Test
             // Create a new SqlConnection object
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                // Open the connection to the database
-                connection.Open();
-
-                // Create a new SqlCommand object with the SQL query and SqlConnection object
-                using (SqlCommand command = new SqlCommand(query, connection))
+                try
                 {
-                    // Execute the query and get a SqlDataReader object
-                    using (SqlDataReader reader = command.ExecuteReader())
+
+
+                    // Open the connection to the database
+                    connection.Open();
+
+                    // Create a new SqlCommand object with the SQL query and SqlConnection object
+                    using (SqlCommand command = new SqlCommand(query, connection))
                     {
-                        // Loop through the rows returned by the query
-                        while (reader.Read())
+                        // Execute the query and get a SqlDataReader object
+                        using (SqlDataReader reader = command.ExecuteReader())
                         {
-                            // Get the values of the columns in the current row
-                            int id = reader.GetInt32(0);
-                            int customerId = reader.GetInt32(1);
-                            DateTime date = reader.GetDateTime(2);
+                            // Loop through the rows returned by the query
+                            while (reader.Read())
+                            {
+                                // Get the values of the columns in the current row
+                                int id = reader.GetInt32(0);
+                                int customerId = reader.GetInt32(1);
+                                DateTime date = reader.GetDateTime(2);
 
-                            //convert to string only Year/Month/Date
-                            string yearAndDay = date.ToString("yyyy-MM-dd");
-                            int amount = reader.GetInt32(3);
-                            //count for totalCount
-                            ++count;
-                            totalAmount += amount;
+                                //convert to string only Year/Month/Date
+                                string yearAndDay = date.ToString("yyyy-MM-dd");
+                                int amount = reader.GetInt32(3);
+                                //count for totalCount
+                                ++count;
+                                totalAmount += amount;
 
-                            // Display the values in the console
-                            Console.WriteLine($"ID: {id}, CustomerID: {customerId}, Date: {yearAndDay}, Amount : {amount} ");
+                                // Display the values in the console
+                                Console.WriteLine($"ID: {id}, CustomerID: {customerId}, Date: {yearAndDay}, Amount : {amount} ");
+                            }
                         }
                     }
                 }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error Occured : {ex.Message}");
+                }
+                finally
+                {
+                    connection.Close();
+                }
+
             }
             //total count 
             Console.WriteLine($"Total Order : {count } ");
@@ -87,10 +106,15 @@ namespace ONRCX_Test
         {
             //query for question 2
             string query = "select c.County, o.date from Customer c left join Orders o on c.id = o.CustomerId where o.date = '2023-01-02' ";
-    
+
             // Create a new SqlConnection object
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
+
+                try
+                {
+
+            
                 // Open the connection to the database
                 connection.Open();
 
@@ -104,16 +128,25 @@ namespace ONRCX_Test
                         while (reader.Read())
                         {
                             // Get the values of the columns in the current row
-                    
+
                             string country = reader.GetString(0);
                             DateTime date = reader.GetDateTime(1);
                             //convert to string only Year/Month/Date
-                            string yearAndDay = date.ToString("yyyy-MM-dd");                         
-                         
+                            string yearAndDay = date.ToString("yyyy-MM-dd");
+
                             // Display the values in the console
                             Console.WriteLine($" Country : {country}, Date: {yearAndDay} ");
                         }
                     }
+                }
+                }
+                catch(Exception ex)
+                {
+                    Console.WriteLine($"Error Occured : {ex.Message}");
+                }
+                finally
+                {
+                    connection.Close();
                 }
             }
         }
@@ -131,6 +164,10 @@ namespace ONRCX_Test
             // Create a new SqlConnection object
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
+                try
+                {
+                    
+             
                 // Open the connection to the database
                 connection.Open();
 
@@ -155,10 +192,58 @@ namespace ONRCX_Test
                         }
                     }
                 }
+                }
+                catch(Exception ex)
+                {
+                    Console.WriteLine($"Error Occured : {ex.Message}");
+                }
+                finally
+                {
+                    connection.Close();
+                }
             }
         }
-
         #endregion
 
+
+        #region INSERT DATA INTO TABLE
+
+
+        /// <summary>
+        /// Inserting Data
+        /// </summary>
+        /// 
+        public static void InsertaIntoTable()
+        {
+            // Define the connection string to your SQL Server database
+
+
+            // Define the query to insert data into a table
+            string query = "INSERT INTO Customer (ID, Name, County) VALUES (@ID, @Name, @County)";
+
+            // Open a connection to the database
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+
+                // Create a command object
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    // Set the parameter values
+                 
+                        command.Parameters.AddWithValue("@ID", 7);
+                        command.Parameters.AddWithValue("@Name", "MikeTest");
+                        command.Parameters.AddWithValue("@County", "CCCCC");
+                        int rowAResult = command.ExecuteNonQuery();
+
+                        Console.WriteLine($"Affected Line : {rowAResult}");
+
+               
+
+                }
+            }
+        }
+        #endregion
     }
+
 }
